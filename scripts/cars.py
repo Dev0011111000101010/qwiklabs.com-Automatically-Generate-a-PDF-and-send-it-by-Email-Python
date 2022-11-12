@@ -3,6 +3,8 @@
 import json
 import locale
 import sys
+# https://ru.stackoverflow.com/questions/418982/%D0%9A%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-%D0%B2-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B5
+from collections import Counter
 
 
 def load_data(filename):
@@ -53,7 +55,33 @@ def process_data(data):
       max_sales = item
       # print(item)
 
-    # TODO: also handle most popular car_year
+  # TODO: also handle most popular car_year
+  most_popular_car_year = {"car_year": 0, "count_frequency": 0, "total_sales": 0}
+  most_popular_car_year_nested_dictionary = most_popular_car_year["car_year"]
+  local_count_frequency = {}
+  for item in data:
+
+    local_car = item["car"]
+    local_car_year = local_car["car_year"]
+    local_car_sales = item["total_sales"]
+    # unique_year_number = local_count_frequency[local_car_year]
+    # starting_value_of_sales = local_count_frequency['title_car_sales']
+
+    # print(local_car_year, local_car_sales)
+    # local_count_frequency
+
+    if local_car_year not in local_count_frequency:
+      unique_year_numbers_and = local_count_frequency[local_car_year] = 1
+      starting_value_of_sales = local_count_frequency['title_car_sales'] = local_car_sales
+      # print(local_count_frequency)
+    else:
+      # date repeat counter "car_year"
+      local_count_frequency[local_car_year] += 1
+      # total_sales_of_cars_produced_this_year =
+      # local_count_frequency['title_car_sales'] += local_car_sales
+      print(local_count_frequency)
+
+
 
   summary = [
     "The {} generated the most revenue: ${}".format(
