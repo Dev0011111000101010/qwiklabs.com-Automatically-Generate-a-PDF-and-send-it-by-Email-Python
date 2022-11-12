@@ -9,6 +9,11 @@ def load_data(filename):
   """Loads the contents of filename as a JSON file."""
   with open(filename) as json_file:
     data = json.load(json_file)
+    print('---------------')
+    print(" # QA print(data)")
+    print(data)
+    print(filename)
+    print('---------------')
   return data
 
 
@@ -54,12 +59,15 @@ def cars_dict_to_table(car_data):
 def main(argv):
   """Process the JSON data and generate a full report out of it."""
   data = load_data("car_sales.json")
-  summary = process_data(data)
-  print(summary)
+  # summary = process_data(data)
+  # print(summary)
   # TODO: turn this into a PDF report
 
   # TODO: send the PDF report as an email attachment
 
+print('---------------')
+# print(main(sys.argv))
+print('---------------')
 
 if __name__ == "__main__":
   main(sys.argv)
