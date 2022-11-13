@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# chmod 600 ~/Downloads/qwiklabs-L35233704.pem
-# ssh -i ~/Downloads/qwiklabs-L35233704.pem student-00-46399dc085d5@34.122.135.26
+# chmod 600 ~/Downloads/qwiklabs-L35303278.pem
+# ssh -i ~/Downloads/qwiklabs-L35303278.pem student-00-46399dc085d5@34.69.221.143
 # GM6nwy4kc0N3
 
 from reportlab.platypus import SimpleDocTemplate

@@ -5,6 +5,9 @@ import locale
 import sys
 # https://ru.stackoverflow.com/questions/418982/%D0%9A%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-%D0%B2-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B5
 from collections import Counter
+# CSV files work with (most popular car_year)
+import pandas as pd
+from numpy.random import randint
 
 
 def load_data(filename):
@@ -56,31 +59,61 @@ def process_data(data):
       # print(item)
 
   # TODO: also handle most popular car_year
-  most_popular_car_year = {"car_year": 0, "count_frequency": 0, "total_sales": 0}
-  most_popular_car_year_nested_dictionary = most_popular_car_year["car_year"]
-  local_count_frequency = {}
+  local_count_frequency = 'Car_year,Count_frequency,Total_sales' + '\n'
+
+  # print(local_count_frequency)
+
+  # Creating a blank for a CSV file
   for item in data:
+    """A CSV file has been created, which contains 
+      the statistics data selected for the task 
+      (year "car_year", number of sales "total_sales")
+      
+      Pandas ("import pandas as pd") was used to parse the generated CSV file."""
 
     local_car = item["car"]
     local_car_year = local_car["car_year"]
     local_car_sales = item["total_sales"]
-    # unique_year_number = local_count_frequency[local_car_year]
-    # starting_value_of_sales = local_count_frequency['title_car_sales']
+
+    # An additional value "1" was assigned to each line (the column "Count_frequency" was added
+    # to the CSV file). The logic is that each one sale has one unit. And if you count
+    # the number of "Count_frequency" units, then you can understand
+    # the most popular sales year (this will be the maximum value of "Count_frequency").
+    local_count_frequency += str(local_car_year) + ',' + str(1) + ',' + str(local_car_sales) + '\n'
 
     # print(local_car_year, local_car_sales)
-    # local_count_frequency
 
-    if local_car_year not in local_count_frequency:
-      unique_year_numbers_and = local_count_frequency[local_car_year] = 1
-      starting_value_of_sales = local_count_frequency['title_car_sales'] = local_car_sales
-      # print(local_count_frequency)
-    else:
-      # date repeat counter "car_year"
-      local_count_frequency[local_car_year] += 1
-      # total_sales_of_cars_produced_this_year =
-      # local_count_frequency['title_car_sales'] += local_car_sales
-      print(local_count_frequency)
+  # print('--------------------')
+  # print(local_count_frequency)
+  # print('--------------------')
 
+  # Creating CSV file from a blank "local_count_frequency"
+  #
+  create_csv_file_car_year_and_sales_not_sorted = open("temp_car_year_file.csv", "w")
+  create_csv_file_car_year_and_sales_not_sorted.write(local_count_frequency)
+  create_csv_file_car_year_and_sales_not_sorted.close()
+
+  df = pd.read_csv('temp_car_year_file.csv')
+
+  # Statistics requested in the task with correct filtering and sums
+  # Pandas hint https://youtu.be/vmEHCJofslg
+  statistic_summary_data = df.groupby(['Car_year']).sum().sort_values('Count_frequency', ascending=False)
+  result_car_most_popular_year = df.groupby(['Car_year']).sum().sort_values('Count_frequency', ascending=False).index.tolist()[0]
+  result_car_most_popular_year_total_sales = df.groupby(['Car_year']).sum().sort_values('Count_frequency', ascending=False).iloc[0,1]
+
+  # test_data_show = statistic_1['Car_year']
+  print('--------------------')
+  print('# statistic_summary_data')
+  print(statistic_summary_data)
+
+  print('--------------------')
+  print("# result_car_most_popular_year")
+  print(result_car_most_popular_year)
+  print('--------------------')
+  print('--------------------')
+  print("# result_car_most_popular_year_total_sales")
+  print(result_car_most_popular_year_total_sales)
+  print('--------------------')
 
 
   summary = [
@@ -88,6 +121,9 @@ def process_data(data):
       format_car(max_revenue["car"]), max_revenue["revenue"]), ''
     "The {} had the most sales: {}".format(
       format_car(max_sales["car"]), max_sales["total_sales"]
+    ),
+    "The most popular year was {} with {} sales".format(
+      result_car_most_popular_year, result_car_most_popular_year_total_sales
     )
   ]
 
