@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
-# chmod 600 ~/Downloads/qwiklabs-L35303278.pem
-# ssh -i ~/Downloads/qwiklabs-L35303278.pem student-00-46399dc085d5@34.69.221.143
-# GM6nwy4kc0N3
+## Access to lab work
+# chmod 600 ~/Downloads/qwiklabs-L35392721.pem
+# ssh -i ~/Downloads/qwiklabs-L35392721.pem student-00-eaaf4890807f@35.194.27.236
+# pip install reportlab
+# pip install pandas
+# MgRbQ3QMiuQx
 
+## Run to correct work
+# pip install reportlab
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus import Paragraph, Spacer, Table, Image
 from reportlab.lib.styles import getSampleStyleSheet

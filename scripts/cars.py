@@ -6,6 +6,8 @@ import sys
 # https://ru.stackoverflow.com/questions/418982/%D0%9A%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-%D0%B2-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B5
 from collections import Counter
 # CSV files work with (most popular car_year)
+## You need to install Pandas for successful work
+# pip install pandas
 import pandas as pd
 from numpy.random import randint
 
@@ -88,7 +90,6 @@ def process_data(data):
   # print('--------------------')
 
   # Creating CSV file from a blank "local_count_frequency"
-  #
   create_csv_file_car_year_and_sales_not_sorted = open("temp_car_year_file.csv", "w")
   create_csv_file_car_year_and_sales_not_sorted.write(local_count_frequency)
   create_csv_file_car_year_and_sales_not_sorted.close()
@@ -142,14 +143,29 @@ def main(argv):
   """Process the JSON data and generate a full report out of it."""
   data = load_data("car_sales.json")
   summary = process_data(data)
+
+
+
+  print('--------------------')
+  print('# "summary" from "def main"')
   print(summary)
+  print('--------------------')
   # TODO: turn this into a PDF report
+  # Using Pandas to open json file
+  df = pd.read_json('car_sales.json')
+
+  print('--------------------')
+  print('# df.to_string()')
+  print(df.to_string())
+  print('--------------------')
 
   # TODO: send the PDF report as an email attachment
 
-# print('---------------')
-# print(main(sys.argv))
-# print('---------------')
+print('---------------')
+print(" # main(sys.argv)")
+print(main(sys.argv))
+print(sys.argv)
+print('---------------')
 
 if __name__ == "__main__":
   main(sys.argv)
