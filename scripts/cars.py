@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import json
+
 import locale
 import sys
 # https://ru.stackoverflow.com/questions/418982/%D0%9A%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-%D0%B2-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B5
@@ -10,6 +10,10 @@ from collections import Counter
 # pip install pandas
 import pandas as pd
 from numpy.random import randint
+# Creating Python STRING of STRINGS to generate PDF
+import json
+# Creation PDF from JSON (Python STRING of STRINGS)
+import reports
 
 
 def load_data(filename):
@@ -167,7 +171,7 @@ def main(argv):
   data_of_json_file = json.load(json_file)
 
   # Creating the foundation for creating a PDF report
-  datat_for_PDF_report = [['ID','Car','Price','Total Sales']]
+  data_for_PDF_report = [['ID','Car','Price','Total Sales']]
 
   # Iterating through the json
   # list
@@ -193,11 +197,14 @@ def main(argv):
 
     # Data for PDF report
     # print(final_report_string)
-    datat_for_PDF_report += [[final_report_string]]
-
-  print(datat_for_PDF_report)
-
-
+    data_for_PDF_report += [[final_report_string]]
+  print('------------------------')
+  print('------------------------')
+  print('# datat_for_PDF_report')
+  print(data_for_PDF_report)
+  print('------------------------')
+  # print(sys.path)
+  reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf", "A Complete Inventory of My Fruit", "This is all my fruit.", data_for_PDF_report)
 
   # Closing file
   json_file.close()
