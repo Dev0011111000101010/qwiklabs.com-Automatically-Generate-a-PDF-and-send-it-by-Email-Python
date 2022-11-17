@@ -189,7 +189,8 @@ def main(argv):
     local_car_total_sales = str(iteration['total_sales'])
 
     # Temporary data for final report
-    final_report_string = (local_car_id + ',' + local_car_make_model_year + ',' + local_car_price + ',' + local_car_total_sales)
+    final_report_string = (local_car_id + "," + local_car_make_model_year + ',' + local_car_price + ',' + local_car_total_sales)
+    splited_final_report_string = final_report_string.split(",")
 
     # QA report data
     # All data of JSON
@@ -197,7 +198,7 @@ def main(argv):
 
     # Data for PDF report
     # print(final_report_string)
-    data_for_PDF_report += [[final_report_string]]
+    data_for_PDF_report += [splited_final_report_string]
   print('------------------------')
   print('------------------------')
   print('# datat_for_PDF_report')
