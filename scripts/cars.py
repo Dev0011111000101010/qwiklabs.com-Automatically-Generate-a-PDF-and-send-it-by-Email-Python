@@ -152,12 +152,55 @@ def main(argv):
   print('--------------------')
   # TODO: turn this into a PDF report
   # Using Pandas to open json file
-  df = pd.read_json('car_sales.json')
+  # df = pd.read_json('car_sales.json')
+  # print('--------------------')
+  # print('# df.to_string()')
+  # print(df.to_string())
+  # print('--------------------')
 
-  print('--------------------')
-  print('# df.to_string()')
-  print(df.to_string())
-  print('--------------------')
+  # Using "import json" to open JSON to LIST
+  # https://www.geeksforgeeks.org/read-json-file-using-python/
+  json_file = open('car_sales.json')
+
+  # returns JSON object as
+  # a dictionary
+  data_of_json_file = json.load(json_file)
+
+  # Creating the foundation for creating a PDF report
+  datat_for_PDF_report = [['ID','Car','Price','Total Sales']]
+
+  # Iterating through the json
+  # list
+  for iteration in data_of_json_file:
+
+    # Temporary data for "local_car_make_model_year"
+    local_car_make = iteration['car']['car_make']
+    local_car_model = iteration['car']['car_model']
+    local_car_year = str(iteration['car']['car_year'])
+
+    # Data we need for report and PDF generation
+    local_car_id = str(iteration['id'])
+    local_car_make_model_year = local_car_make + ' ' + local_car_model + ' (' + local_car_year + ")"
+    local_car_price = iteration['price']
+    local_car_total_sales = str(iteration['total_sales'])
+
+    # Temporary data for final report
+    final_report_string = (local_car_id + ',' + local_car_make_model_year + ',' + local_car_price + ',' + local_car_total_sales)
+
+    # QA report data
+    # All data of JSON
+    # print(iteration)
+
+    # Data for PDF report
+    # print(final_report_string)
+    datat_for_PDF_report += [[final_report_string]]
+
+  print(datat_for_PDF_report)
+
+
+
+  # Closing file
+  json_file.close()
 
   # TODO: send the PDF report as an email attachment
 
