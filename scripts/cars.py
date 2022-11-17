@@ -147,12 +147,15 @@ def main(argv):
   """Process the JSON data and generate a full report out of it."""
   data = load_data("car_sales.json")
   summary = process_data(data)
+  # string_summary = str(summary)
+  join_summary = '<br/>'.join(summary)
+  splited_summary = join_summary.split("\n")
 
 
 
   print('--------------------')
-  print('# "summary" from "def main"')
-  print(summary)
+  print('# "join_summary" from "def main"')
+  print(join_summary)
   print('--------------------')
   # TODO: turn this into a PDF report
   # Using Pandas to open json file
@@ -205,7 +208,7 @@ def main(argv):
   print(data_for_PDF_report)
   print('------------------------')
   # print(sys.path)
-  reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf", "A Complete Inventory of My Fruit", "This is all my fruit.", data_for_PDF_report)
+  reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf", "Sales summary for last month", join_summary, data_for_PDF_report)
 
   # Closing file
   json_file.close()
