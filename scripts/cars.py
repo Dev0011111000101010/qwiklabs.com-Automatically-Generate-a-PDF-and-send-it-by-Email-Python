@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# "##" = action comment, e.g. comment out local path, uncomment VM path
+# "#" = casual comment (no action needed)
 
 import locale
 import sys
@@ -14,6 +16,8 @@ from numpy.random import randint
 import json
 # Creation PDF from JSON (Python STRING of STRINGS)
 import reports
+# For sending the E-mail massages
+import emails
 
 
 def load_data(filename):
@@ -148,36 +152,35 @@ def main(argv):
   data = load_data("car_sales.json")
   summary = process_data(data)
   # string_summary = str(summary)
-  join_summary = '<br/>'.join(summary)
-  splited_summary = join_summary.split("\n")
+  email_join_summary = '/n'.join(summary)
+  pdf_join_summary = '<br/>'.join(summary)
+  # splited_summary = join_summary.split("\n")
 
 
 
   print('--------------------')
-  print('# "join_summary" from "def main"')
-  print(join_summary)
+  print('# "email_join_summary" from "def main"')
+  print(email_join_summary)
   print('--------------------')
   # TODO: turn this into a PDF report
-  # Using Pandas to open json file
+  """Using Pandas to open json file"""
   # df = pd.read_json('car_sales.json')
   # print('--------------------')
   # print('# df.to_string()')
   # print(df.to_string())
   # print('--------------------')
 
-  # Using "import json" to open JSON to LIST
+  """Using "import json" to open JSON to LIST"""
   # https://www.geeksforgeeks.org/read-json-file-using-python/
   json_file = open('car_sales.json')
 
-  # returns JSON object as
-  # a dictionary
+  # returns JSON object as a dictionary
   data_of_json_file = json.load(json_file)
 
   # Creating the foundation for creating a PDF report
   data_for_PDF_report = [['ID','Car','Price','Total Sales']]
 
-  # Iterating through the json
-  # list
+  # Iterating through the json list
   for iteration in data_of_json_file:
 
     # Temporary data for "local_car_make_model_year"
@@ -208,12 +211,25 @@ def main(argv):
   print(data_for_PDF_report)
   print('------------------------')
   # print(sys.path)
-  reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf", "Sales summary for last month", join_summary, data_for_PDF_report)
+  ## Online version of the path
+  reports.generate("/tmp/report.pdf", "Sales summary for last month", pdf_join_summary, data_for_PDF_report)
+  ## Local version of the path
+  # reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf", "Sales summary for last month", pdf_join_summary, data_for_PDF_report)
 
   # Closing file
   json_file.close()
 
   # TODO: send the PDF report as an email attachment
+  sender = "automation@example.com"
+  receiver = "{}@example.com".format(os.environ.get('USER'))
+  subject = "Sales summary for last month"
+  body = email_join_summary
+
+  ## Online version of the path
+  message = emails.generate(sender, receiver, subject, body, "/tmp/report.pdf")
+  ## Local version of the path
+  # message = emails.generate(sender, receiver, subject, body, "/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf")
+  emails.send(message)
 
 print('---------------')
 print(" # main(sys.argv)")
