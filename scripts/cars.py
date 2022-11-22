@@ -18,6 +18,8 @@ import json
 import reports
 # For sending the E-mail massages
 import emails
+# For the sender (IP address) to pull up automatically
+import os
 
 
 def load_data(filename):
@@ -152,7 +154,7 @@ def main(argv):
   data = load_data("car_sales.json")
   summary = process_data(data)
   # string_summary = str(summary)
-  email_join_summary = '/n'.join(summary)
+  email_join_summary = '\n'.join(summary)
   pdf_join_summary = '<br/>'.join(summary)
   # splited_summary = join_summary.split("\n")
 
@@ -212,7 +214,7 @@ def main(argv):
   print('------------------------')
   # print(sys.path)
   ## Online version of the path
-  reports.generate("/tmp/report.pdf", "Sales summary for last month", pdf_join_summary, data_for_PDF_report)
+  reports.generate("/tmp/cars.pdf", "Sales summary for last month", pdf_join_summary, data_for_PDF_report)
   ## Local version of the path
   # reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf", "Sales summary for last month", pdf_join_summary, data_for_PDF_report)
 
@@ -226,7 +228,7 @@ def main(argv):
   body = email_join_summary
 
   ## Online version of the path
-  message = emails.generate(sender, receiver, subject, body, "/tmp/report.pdf")
+  message = emails.generate(sender, receiver, subject, body, "/tmp/cars.pdf")
   ## Local version of the path
   # message = emails.generate(sender, receiver, subject, body, "/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/report.pdf")
   emails.send(message)

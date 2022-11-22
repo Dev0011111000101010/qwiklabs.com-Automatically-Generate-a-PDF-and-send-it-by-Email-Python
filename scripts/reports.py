@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 ## Access to lab work
-# chmod 600 ~/Downloads/qwiklabs-L35392721.pem
-# ssh -i ~/Downloads/qwiklabs-L35392721.pem student-00-eaaf4890807f@35.194.27.236
+# chmod 600 ~/Downloads/qwiklabs-L35780194.pem
+# ssh -i ~/Downloads/qwiklabs-L35780194.pem student-00-eaaf4890807f@34.27.42.203
 # pip install reportlab
 # pip install pandas
 # MgRbQ3QMiuQx

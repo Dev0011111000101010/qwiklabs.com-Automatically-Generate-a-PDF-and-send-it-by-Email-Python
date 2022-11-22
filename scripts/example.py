@@ -15,12 +15,16 @@ table_data=[
   ['cherries', 23, 5.80],
   ['grapes', 13, 2.48],
   ['kiwi', 4, 0.49]]
-reports.generate("/tmp/report.pdf", "A Complete Inventory of My Fruit", "This is all my fruit.", table_data)
 
-sender = "automation@example.com"
-receiver = "{}@example.com".format(os.environ.get('USER'))
-subject = "List of Fruits"
-body = "Hi\n\nI'm sending an attachment with all my fruit."
+"""Online"""
+# reports.generate("/tmp/report.pdf", "A Complete Inventory of My Fruit", "This is all my fruit.", table_data)
+"""Local"""
+reports.generate("/Users/il/PycharmProjects/qwiklabs.com-Automatically-Generate-a-PDF-and-send-it-by-Email-Python/scripts/tmp/report.pdf", "A Complete Inventory of My Fruit", "This is all my fruit.", table_data)
 
-message = emails.generate(sender, receiver, subject, body, "/tmp/report.pdf")
-emails.send(message)
+# sender = "automation@example.com"
+# receiver = "{}@example.com".format(os.environ.get('USER'))
+# subject = "List of Fruits"
+# body = "Hi\n\nI'm sending an attachment with all my fruit."
+#
+# message = emails.generate(sender, receiver, subject, body, "/tmp/report.pdf")
+# emails.send(message)
